@@ -41,16 +41,25 @@
         }
         p {
             font-size: 0.9em;
-            color: #909598;
+            color: #001323;
         }
-        /* Additional style rules go here! */
+        p.author-info {
+            font-size: 0.7em;
+            color: #797979;
+            text-align: right
+        }
+        p.about-this-map {
+            font-size: 1.1em;
+            color: #001323
+        }
+        p.data-sources {
+            font-size: 1.1em;
+            color: #001323
+        }
+        a:link {
+            color: #20a23e
+        }
         
-        p.about-this-map { font-size: 1.2;
-        color: #909598; }
-        
-        p.data-sources { font-size: 1.2;
-            color: #909598;
-
     </style>
 </head>
 
@@ -64,14 +73,13 @@
 
     <footer>
         <p class='author-info'>Map authored by Vincent Hayes</p>
+        <p class='about-this-map'> About This Map</p>
         <p>This is a very interesting map. It can be used in a variety of ways and very helpful.</p>
-        <p>Additional information about the data and map goes here.</p>
+        <p class='data-sources'> Data Sources</p>
+        <p>More information can be found
+        <a href="https://github.com/vhayes1588/geo409/tree/master/Task-B">here</a>.
+        </p>
     </footer>
-    
-    <p>
-    <footer> <p class='about-this-map'>About this map</p> </footer>
-    
-    <footer> <p class='data-sources'>Data sources</p> </footer> </p>
 
     <script>
         var map;
@@ -93,8 +101,6 @@
 
         map.addLayer(tiles);
     </script>
-    
-<a> hfref="http://mycoolnewwebsite.com">Visit My Website</a>
     
 </body>
 
