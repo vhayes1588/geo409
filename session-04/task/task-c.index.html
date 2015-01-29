@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Geo409 Task C</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            width: 80%;
+            height: 540px;
+            margin: 10px auto;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        /* Additional style rules go here! */
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Map of Kentucky</h1>
+        <h2>Prestonsburgians</h2>
+    </header>
+
+    <div id='map'></div>
+
+    <footer>
+        <p>Map authored by Vincent Hayes</p>
+        <p>A fun map of Kentucky including my hometown of Prestonburg.</p>
+    </footer>
+
+    <script>
+        var map;
+        var targetDiv = 'map';
+
+        var options = {
+            center: [38.0489,-84.5025],
+            zoom: 8
+        }
+        map = L.map(targetDiv, options);
+        var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+            attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+            subdomains: '0123',
+            minZoom: 2,
+            maxZoom: 18
+        });
+        map.addLayer(tiles);
+        
+        // begin writing Task C code here
+        var city1Name = "Lexington";
+        console.log(city1Name);
+        var city1Lat = 38.0489;
+        console.log(city1Lat);
+        var city1Lon = -84.5025;
+        console.log(city1Lon);
+        var city1Pop = 308428;
+        console.log(city1Pop);
+        var city1Capitol = false;
+        console.log(city1Capitol);
+        var city2Name = "Frankfort"
+        console.log(city2Name);
+        var city2Lat = 38.1970
+        console.log(city2Lat);
+        var city2Lon = -84.8630
+        console.log(city2Lon);
+        var city2Pop = 27453
+        console.log(city2Pop);
+        var city2Capitol = true;
+        console.log(city2Capitol);
+        var city3Name = "Prestonsburg"
+        console.log(city3Name);
+        var city3Lat = 37.6678
+        console.log(city3Lat);
+        var city3Lon = -82.7589
+        console.log(city3Lon);
+        var city3Pop = 3310
+        console.log(city3Pop);
+        var city3Capitol = false;
+        console.log(city3Capitol);
+        var totalPop = city1Pop + city2Pop + city3Pop;
+        console.log("The total population of these cities is" + (totalPop));
+        var averagePop = totalPop / 3;
+        console.log("The average population of these cities is" + (averagePop));
+        
+        // end writing Task C code here
+        
+        // city1 marker code
+        var city1Popup = "<b>"+city1Name+"</b><br>"
+                        +"<b>population</b>: "+city1Pop;
+        
+        if(city1Capitol == true) {
+            city1Popup += "<br>Capitol of the Commonwealth of Kentucky";   
+        }
+        
+        L.marker([city1Lat,city1Lon]).addTo(map)
+            .bindPopup(city1Popup);
+        
+
+        var city2Popup = "<b>"+city2Name+"</b><br>"
+                        +"<b>population</b>: "+city2Pop;
+        
+        if(city2Capitol == true) {
+            city2Popup += "<br>Capitol of the Commonwealth of Kentucky";   
+        }
+        
+        L.marker([city2Lat,city2Lon]).addTo(map)
+            .bindPopup(city2Popup);
+        
+
+        var city3Popup = "<b>"+city3Name+"</b><br>"
+                       +"<b>population</b>: "+city3Pop;
+        
+        if(city3Capitol == true) {
+           city3Popup += "<br>Capitol of the Commonwealth of Kentucky";   
+        }
+        
+        L.marker([city3Lat,city3Lon]).addTo(map)
+            .bindPopup(city3Popup);
+          
+    </script>
+    
+</body>
+
+</html>
