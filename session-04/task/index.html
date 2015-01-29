@@ -50,17 +50,15 @@
 
 <body>
     <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1>Map of Kentucky</h1>
+        <h2>Prestonsburgians</h2>
     </header>
 
     <div id='map'></div>
 
     <footer>
-        <p>Map authored by YOUR NAME</p>
-        <p>Additional information about the data and map goes here.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl. Vestibulum commodo imperdiet lacus, sed facilisis erat placerat sit amet. Nulla consequat malesuada neque eget aliquet. Integer non convallis nisl, gravida ultrices ex. Fusce nec vestibulum elit. Sed elementum lectus ipsum, vulputate elementum ex laoreet a. Aenean eu ex varius, varius felis vitae, efficitur nulla. Quisque pretium laoreet ante, in sodales dui vehicula at. Mauris eu sem sapien.
-        </p>
+        <p>Map authored by Vincent Hayes</p>
+        <p>A fun map of Kentucky including my hometown of Prestonburg.</p>
     </footer>
 
     <script>
@@ -81,8 +79,40 @@
         map.addLayer(tiles);
         
         // begin writing Task C code here
-        
-       
+        var city1Name = "Lexington";
+        console.log(city1Name);
+        var city1Lat = 38.0489;
+        console.log(city1Lat);
+        var city1Lon = -84.5025;
+        console.log(city1Lon);
+        var city1Pop = 308428;
+        console.log(city1Pop);
+        var city1Capitol = false;
+        console.log(city1Capitol);
+        var city2Name = "Frankfort"
+        console.log(city2Name);
+        var city2Lat = 38.1970
+        console.log(city2Lat);
+        var city2Lon = -84.8630
+        console.log(city2Lon);
+        var city2Pop = 27453
+        console.log(city2Pop);
+        var city2Capitol = true;
+        console.log(city2Capitol);
+        var city3Name = "Prestonsburg"
+        console.log(city3Name);
+        var city3Lat = 37.6678
+        console.log(city3Lat);
+        var city3Lon = -82.7589
+        console.log(city3Lon);
+        var city3Pop = 3310
+        console.log(city3Pop);
+        var city3Capitol = false;
+        console.log(city3Capitol);
+        var totalPop = city1Pop + city2Pop + city3Pop;
+        console.log("The total population of these cities is" + (totalPop));
+        var averagePop = totalPop / 3;
+        console.log("The average population of these cities is" + (averagePop));
         
         // end writing Task C code here
         
@@ -98,26 +128,26 @@
             .bindPopup(city1Popup);
         
 
-//        var city2Popup = "<b>"+city2Name+"</b><br>"
-//                        +"<b>population</b>: "+city2Pop;
-//        
-//        if(city2Capitol == true) {
-//            city2Popup += "<br>Capitol of the Commonwealth of Kentucky";   
-//        }
-//        
-//        L.marker([city2Lat,city2Lon]).addTo(map)
-//            .bindPopup(city2Popup);
+        var city2Popup = "<b>"+city2Name+"</b><br>"
+                        +"<b>population</b>: "+city2Pop;
+        
+        if(city2Capitol == true) {
+            city2Popup += "<br>Capitol of the Commonwealth of Kentucky";   
+        }
+        
+        L.marker([city2Lat,city2Lon]).addTo(map)
+            .bindPopup(city2Popup);
         
 
-//        var city3Popup = "<b>"+city3Name+"</b><br>"
-//                        +"<b>population</b>: "+city3Pop;
-//        
-//        if(city3Capitol == true) {
-//            city3Popup += "<br>Capitol of the Commonwealth of Kentucky";   
-//        }
-//        
-//        L.marker([city3Lat,city3Lon]).addTo(map)
-//            .bindPopup(city3Popup);
+        var city3Popup = "<b>"+city3Name+"</b><br>"
+                       +"<b>population</b>: "+city3Pop;
+        
+        if(city3Capitol == true) {
+           city3Popup += "<br>Capitol of the Commonwealth of Kentucky";   
+        }
+        
+        L.marker([city3Lat,city3Lon]).addTo(map)
+            .bindPopup(city3Popup);
           
     </script>
     
