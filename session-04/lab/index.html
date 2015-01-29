@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html>
 
 <head>
     <meta charset=utf-8 />
-    <title>Map Page Template</title>
+    <title>Module 04 Template</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
@@ -59,17 +60,13 @@
         <p>Map authored by Matheus Caputo Pires</p>
         <p>Additional information about the data and map goes here.</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl. Vestibulum commodo imperdiet lacus, sed facilisis erat placerat sit amet. Nulla consequat malesuada neque eget aliquet. Integer non convallis nisl, gravida ultrices ex. Fusce nec vestibulum elit. Sed elementum lectus ipsum, vulputate elementum ex laoreet a. Aenean eu ex varius, varius felis vitae, efficitur nulla. Quisque pretium laoreet ante, in sodales dui vehicula at. Mauris eu sem sapien.
-            <p>
+        </p>
     </footer>
 
     <script>
-        console.log("Hello Map");
-        console.log(true);
-        console.log(false);
         var map;
         var targetDiv = 'map';
-         //Amsterdam Coordinates: [52.3667,4.9000]
-         //Lexington Coordinates: [38.0489,-84.5025]
+
         var options = {
             center: [38.0489,-84.5025],
             zoom: 13
@@ -81,8 +78,16 @@
             minZoom: 2,
             maxZoom: 18
         });
-
         map.addLayer(tiles);
+        
+        // continue JavaScript coding here!
+//        console.log("console value goes here");
+        var city1Name = "Lexington";
+        var city1Lat = 38.0489;
+        var city1Lon = -84.5025;
+        var city1Pop = "301569";
+        var state = "KY"; 
+        console.log(city1Name + " is a city in "+ state + " and has a population of "+ (city1Pop+10));   
     </script>
     
 </body>
