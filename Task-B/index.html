@@ -28,7 +28,7 @@
         }
         h2 {
             display: inline-block;
-            color: #001323;
+            color: #696969;
         }
         #map {
             width: 80%;
@@ -40,45 +40,38 @@
             width: 80%;
         }
         p {
-            font-size: 0.9em;
+            font-size: 1em;
             color: #001323;
         }
         p.author-info {
-            font-size: 0.7em;
-            color: #797979;
-            text-align: right
+            font-style: italic;
+            font-size: 0.8em;
+            text-align: right;
         }
-        p.about-this-map {
-            font-size: 1.1em;
-            color: #001323
+        a {
+            color: #696969;
+            font-weight: bold;
         }
-        p.data-sources {
-            font-size: 1.1em;
-            color: #001323
-        }
-        a:link {
-            color: #20a23e
-        }
-        
+        /* Additional style rules go here! */
     </style>
 </head>
 
 <body>
     <header>
-        <h1>Lexington: Home of the IGUANAS</h1>
-        <h2>My First Map</h2>
+        <h1>Map Title</h1>
+        <h2>Map Subtitle</h2>
     </header>
 
     <div id='map'></div>
 
     <footer>
-        <p class='author-info'>Map authored by Vincent Hayes</p>
-        <p class='about-this-map'> About This Map</p>
-        <p>This is a very interesting map. It can be used in a variety of ways and very helpful.</p>
-        <p class='data-sources'> Data Sources</p>
-        <p>More information can be found
-        <a href="https://github.com/vhayes1588/geo409/tree/master/Task-B">here</a>.
-        </p>
+        <p class='author-info'>Map authored by Matheus Caputo Pires</p>
+        <h2>About This Map</h2>
+        <p>Adiciona information about this map goes here.</p>
+        <h2>Data Sources</h2>
+        <p>Additional information about the data and map goes here. The code for the map can be found on <a href="https://github.com/">Github</a></p>
+<!--        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl. Vestibulum commodo imperdiet lacus, sed facilisis erat placerat sit amet. Nulla consequat malesuada neque eget aliquet. Integer non convallis nisl, gravida ultrices ex. Fusce nec vestibulum elit. Sed elementum lectus ipsum, vulputate elementum ex laoreet a. Aenean eu ex varius, varius felis vitae, efficitur nulla. Quisque pretium laoreet ante, in sodales dui vehicula at. Mauris eu sem sapien.-->
+            <p>
     </footer>
 
     <script>
@@ -87,7 +80,7 @@
          //Amsterdam Coordinates: [52.3667,4.9000]
          //Lexington Coordinates: [38.0489,-84.5025]
         var options = {
-            center: [38.0489, -84.5025],
+            center: [38.0489,-84.5025],
             zoom: 13
         }
         map = L.map(targetDiv, options);
