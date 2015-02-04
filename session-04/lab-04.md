@@ -349,7 +349,11 @@ For example, within the console itself, try typing the word `city`. We see the v
 
 ![Using Console as command prompt](assets/console-command-prompt.png)
 
+<<<<<<< HEAD
 Given what you've learned in this lab instruction, continue to the task-c.md file located at: [https://github.com/newmapsplus/geo409/blob/master/session-04/task-c.md](https://github.com/newmapsplus/geo409/blob/master/session-04/task-c.md)
+=======
+Given what you've learned in this lab instruction, continue to the task-c.md file located at [https://github.com/newmapsplus/geo409/session-04/task-c.md]
+>>>>>>> FETCH_HEAD
 
 ***Glossary***
 
