@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Geo409 Task E Starter</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            width: 80%;
+            height: 540px;
+            margin: 10px auto;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        /* Additional style rules go here! */
+        
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Kentucky:</h1>
+        <h2>The Population Density View</h2>
+    </header>
+
+    <div id='map'></div>
+
+    <footer>
+        <p>Map authored by Vincent Hayes</p>
+        <p>This map shows some interesting data about the population densities of three great cities.</p>
+
+    </footer>
+
+    <script>
+        var map;
+        var targetDiv = 'map';
+
+        var options = {
+            center: [38.0489,-84.5025],
+            zoom: 8
+        }
+        map = L.map(targetDiv, options);
+        var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+            attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+            subdomains: '0123',
+            minZoom: 2,
+            maxZoom: 18
+        });
+        map.addLayer(tiles);
+        
+        // begin writing/editing Task E code here
+        
+        var lexArea = 285.5;
+        var fraArea = 14.6;
+        var preArea = 11.1;
+        
+        prepareData(lexArea, fraArea, preArea); 
+        
+        function prepareData(lexArea, fraArea, preArea) { 
+            
+            var cities = ["Lexington", "Frankfort", "Prestonsburg"]; 
+            var cityCoords = [
+                [38.0297, -84.4947]
+                [38.2009, -84.8733]
+                [37.6678, -82.7589]
+                
+            ];
+            var cityPops = [308428, 27453, 3310]; 
+            
+            var cityAreas = [lexArea, fraArea, preArea]; 
+                    
+            mapCities(cities, cityCoords, cityPops, cityAreas); 
+            
+        }
+            
+        function mapCities(cities, cityCoords, cityPops, cityAreas) { 
+            function calPopDensity(cityPops, cityAreas, units)
+            {
+            var units = 'miles';
+            if(units=='miles'){
+            for(var i = 0; i < cities.length; i++) {
+                function calcPopDensity(cityPops, cityAreas, units){
+                    var density = cityPops[i] / cityAreas[i];}}
+                if(units=="km"){
+                    for(var i=0; i <cites.length: i++) {
+        var density = cityPops[i] / (cityAreas[i]*1.61);}}}}
+
+                var popup = "<b>"+cities[i]+"</b><br>"
+                                "<b>Density</b>: "+density.toLocaleString()+" people per sq " + units;
+
+                L.marker(cityCoords[i]).addTo(map)
+                    .bindPopup(popup);
+                
+            }
+            
+        // end writing/editing Task E code here
+          
+    </script>
+    
+</body>
+
+</html>
