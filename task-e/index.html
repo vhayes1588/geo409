@@ -89,7 +89,7 @@
         var louArea = 385.09;
         // create a third variable for a third city's area here
         var frankArea = 14.3;
-        prepareData(lexArea); // modify function call to pass 2 additional
+        prepareData(lexArea, louArea, frankArea); // modify function call to pass 2 additional
                               // arguments
         
         function prepareData(lexArea, louArea, frankArea) { /* include 2 more parameters here */
@@ -105,11 +105,9 @@
             var cityPops = [308428, 756832, 25527]; /* include 2nd and 3rd city pops here */
             var cityAreas = [lexArea, louArea, frankArea]; /* include 2nd and 3rd city areas */
                     
-            mapCities(cities, cityCoords); // modify function call to pass 2 additional
-                                           // arguments
-            
+            mapCities(cities, cityCoords, cityPops, cityAreas); // modify function call to pass 2 additional
+                                           // arguments 
         }
-            
         function mapCities(cities, cityCoords, cityPops, cityAreas) { /* include 2 more parameters here */
             
             var units = 'miles';
@@ -120,13 +118,12 @@
                                  the city population and area as arguments, and assign
                                  return value to the "density" variable */
                 
-                var Density = calcPopDensity(cityPops, cityAreas, units);
+                var Density = calcPopDensity(cityPops[i], cityAreas[i], units);
                 var popup = "<b>"+cities[i]+"</b><br>"
                                 +"<b>Density</b>: "+Density.toLocaleString()+" people per sq " + units;
 
                 L.marker(cityCoords[i]).addTo(map)
                     .bindPopup(popup);
-                
             }
         }
         
@@ -135,11 +132,15 @@
         // of the city with these two values and return the result to the caller 
         
         function calcPopDensity(cityPops, cityAreas, units){
-            var Density = cityPops / cityAreas;    
+            var dens = cityPops / cityAreas;    
             if (units == 'km'){
-               var Density = Density / 2.58998811;
+               dens = dens / 2.58998811;
+            } else {
+                if (units != 'miles'){
+                    dens = "No Value";
+                }
             }
-            return Density;
+            return dens;
         }
         
         // end writing/editing Task E code here
