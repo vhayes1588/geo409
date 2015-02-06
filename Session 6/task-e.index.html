@@ -93,8 +93,8 @@
             
             var cities = ["Lexington", "Frankfort", "Prestonsburg"]; 
             var cityCoords = [
-                [38.0297, -84.4947]
-                [38.2009, -84.8733]
+                [38.0297, -84.4947],
+                [38.2009, -84.8733],
                 [37.6678, -82.7589]
                 
             ];
@@ -107,24 +107,27 @@
         }
             
         function mapCities(cities, cityCoords, cityPops, cityAreas) { 
-            function calPopDensity(cityPops, cityAreas, units)
-            {
-            var units = 'miles';
-            if(units=='miles'){
-            for(var i = 0; i < cities.length; i++) {
-                function calcPopDensity(cityPops, cityAreas, units){
-                    var density = cityPops[i] / cityAreas[i];}}
-                if(units=="km"){
-                    for(var i=0; i <cites.length; i++) {
-        var density = cityPops[i] / (cityAreas[i]*1.61);}}}}
+                var units = 'miles';
+                for(var i = 0; i < cities.length; i++) {
+                    var density = calPopDensity(cityPops[i], cityAreas[i], units)
+                    var popup = "<b>"+cities[i]+"</b><br>" +
+                                    "<b>Density</b>: "+density.toLocaleString()+" people per sq " + units;
 
-                var popup = "<b>"+cities[i]+"</b><br>"
-                                "<b>Density</b>: "+density.toLocaleString()+" people per sq " + units;
-
-                L.marker(cityCoords[i]).addTo(map)
-                    .bindPopup(popup);
+                    L.marker(cityCoords[i]).addTo(map)
+                        .bindPopup(popup);
+                }
                 
+        }
+        
+        function calPopDensity(pop, area, units) {
+
+            if(units == 'miles') {
+                return pop/area;
+            } else if(units == 'km') {
+               return pop/(area*1.60934*1.60934); // multiply conversion twice to account for sq
             }
+        
+        }
             
         // end writing/editing Task E code here
           
