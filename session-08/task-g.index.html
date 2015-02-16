@@ -75,21 +75,22 @@
         var Thunderforest_OpenCycleMap = L.tileLayer('http://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 });
-                
+    map.addLayer(Thunderforest_OpenCycleMap); // don't forget to add tiles to map!
+        
     var redIguana = L.latLng(40.7718,-111.9124);
         
     map.on('click', function(e){
-        console.log(e.latlng);   
+        console.log(e.latlng);
+        var currentCoords =  e.latlng;
+        map.setView(currentCoords, 6);
+        var distanceFromClick = redIguana.distanceTo(currentCoords);
+        console.log("You clicked ", distanceFromClick, "meters from Red Iguana.");
+        var northBorder = map.getBounds().getSouthWest();
+        var distanceFromSW = redIguana.distanceTo(northBorder);
+        console.log("Red Iguana is ", distanceFromSW, " meters from the SouthWest corner of the current map view.");
     });
-        var map = L.map('map')
-        map.setView([40.7718,-111.9124], 4);
         
-            var center = map.getCenter(redIguana);
-    console.log(center);
-    var zoom = map.getZoom(redIguana);
-    console.log(zoom);
-    var bounds = map.getBounds(redIguana);
-    console.log(bounds);
+            
                   
     </script>
     
