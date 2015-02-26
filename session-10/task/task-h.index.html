@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Geo409 Task H Starter</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            width: 80%;
+            height: 540px;
+            margin: 10px auto;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        /* Additional style rules go here! */
+        
+        .blue {
+            color: #165bb6;
+        }
+        .red {
+            color: #cc0000;
+        }
+        .purple {
+            color: #b6165b; 
+        }
+        
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>My Three Homes:</h1>
+        <h2>Connected to My Favorite Place</h2>
+    </header>
+
+    <div id='map'></div>
+
+    <footer>
+        <p>Map authored by Vincent Hayes</p>
+        <p>This map shows the three homes I have had the priveledge to live in my 24 years. The gray paths show my to get to my favorite place: Rupp Arena.
+        </p>
+    </footer>
+
+    <script>
+
+        var map = L.map('map', {
+            center: [38.96,-85.36],
+            zoom: 8,
+        });
+       
+        var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+            attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+            subdomains: '0123',
+            minZoom: 4,
+            maxZoom: 12
+        });
+        map.addLayer(tiles);
+        
+        // Begin writing/modifying code for Task H here
+        
+var places = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#7E7E7E",
+        "marker-size": "medium",
+        "marker-symbol": "",
+        "name": "Alice Lloyd College",
+        "description": "My first home away from home."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.87639617919922,
+          37.335497334999936
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#7E7E7E",
+        "marker-size": "medium",
+        "marker-symbol": "",
+        "name": "Home",
+        "description": "The house where I grew up."
+      },
+      "geometry": {
+        "type": "Point",
+          "marker-size": "large",
+        "coordinates": [
+          -82.85133361816406,
+          37.6435971887664
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#7E7E7E",
+        "marker-size": "medium",
+        "marker-symbol": "",
+        "name": "Caney Cottage",
+        "description": "My home while at UK."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.49885368347168,
+          38.03474060256755
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -84.5024961233139,
+              38.050097651579705
+            ],
+            [
+              -84.50367629528044,
+              38.04948512120613
+            ],
+            [
+              -84.50268924236296,
+              38.04866981420605
+            ],
+            [
+              -84.50162708759308,
+              38.049375287631726
+            ],
+            [
+              -84.5024961233139,
+              38.050097651579705
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -84.49872493743896,
+            38.0349603134589
+          ],
+          [
+            -84.5009994506836,
+            38.03707288454689
+          ],
+          [
+            -84.49466943740845,
+            38.041500635831405
+          ],
+          [
+            -84.50340270996094,
+            38.04917251752295
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -82.85167694091797,
+            37.643189410262686
+          ],
+          [
+            -84.45508003234863,
+            38.04308915309781
+          ],
+          [
+            -84.4790267944336,
+            38.04112885021807
+          ],
+          [
+            -84.48185920715332,
+            38.04258218324624
+          ],
+          [
+            -84.49100017547607,
+            38.041162648988205
+          ],
+          [
+            -84.49297428131104,
+            38.04278497160807
+          ],
+          [
+            -84.49503421783447,
+            38.041500635831405
+          ],
+          [
+            -84.50344562530518,
+            38.04920631258007
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -82.87622451782227,
+            37.33590679668021
+          ],
+          [
+            -82.85167694091797,
+            37.643189410262686
+          ]
+        ]
+      }
+    }
+  ]
+}
+
+var pointOptions = {
+    color: "blue"
+}
+var lineOptions = {
+    color: "gray"
+}
+var polygonOptions = {
+    color: "black"
+}
+
+    var placesLeaflet = L.geoJson(places, {
+        pointToLayer : function(feature, latlng) {
+            console.log(feature,latlng);
+            return L.circle(latlng, 20000);
+        },
+        
+                style : function(feature) {
+            return { dashArray: "5, 10",
+                     weight: 10
+                   }   
+        },
+        
+                onEachFeature: function(feature, layer) {
+            if(feature.geometry.type == "Point") {
+                layer.setStyle(pointOptions);
+            }
+            if(feature.geometry.type == "LineString") {
+                layer.setStyle(lineOptions);
+            }   
+            if(feature.geometry.type == "Polygon") 
+                layer.setStyle(polygonOptions);
+    
+                }}).addTo(map);
+
+    </script>
+    
+</body>
+
+</html>
