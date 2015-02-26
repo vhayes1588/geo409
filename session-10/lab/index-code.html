@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Module 10 Lab Practice Template With Code</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            width: 80%;
+            height: 540px;
+            margin: 10px auto;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        /* Additional style rules go here! */
+        
+        .popup {
+            background: green; 
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Map Title</h1>
+        <h2>Map Subtitle</h2>
+    </header>
+
+    <div id='map'></div>
+
+    <footer>
+        <p>Map authored by YOUR NAME</p>
+        <p>Additional information about the data and map goes here.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl. Vestibulum commodo imperdiet lacus, sed facilisis erat placerat sit amet. Nulla consequat malesuada neque eget aliquet. Integer non convallis nisl, gravida ultrices ex. Fusce nec vestibulum elit. Sed elementum lectus ipsum, vulputate elementum ex laoreet a. Aenean eu ex varius, varius felis vitae, efficitur nulla. Quisque pretium laoreet ante, in sodales dui vehicula at. Mauris eu sem sapien.
+        </p>
+    </footer>
+
+    <script>
+        var options = {
+            center: [55.653,30.608],
+            zoom: 5
+        }
+        var map = L.map('map', options);
+        var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+            attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+            subdomains: '0123',
+            minZoom: 2,
+            maxZoom: 18
+        });
+        map.addLayer(tiles);
+        
+//         var places = {
+//          "type": "FeatureCollection",
+//          "features": [
+//            {
+//              "type": "Feature",
+//              "properties": {
+//                "name": "Some Place",
+//                "size": 38000
+//              },
+//              "geometry": {
+//                "type": "Point",
+//                "coordinates": [
+//                  29.267578125,
+//                  56.8249328650072
+//                ]
+//              }
+//            },
+//            {
+//              "type": "Feature",
+//              "properties": {
+//                "name": "Another Place",
+//                "size": 65000
+//              },
+//              "geometry": {
+//                "type": "Point",
+//                "coordinates": [
+//                  34.013671875,
+//                  55.677584411089505
+//                ]
+//              }
+//            },
+//            {
+//              "type": "Feature",
+//              "properties": {
+//                "name": "Yet Another Place",
+//                "size": 22000
+//              },
+//              "geometry": {
+//                "type": "Point",
+//                "coordinates": [
+//                  29.179687499999996,
+//                  54.59752785211386
+//                ]
+//              }
+//            }
+//          ]
+//        }
+//        var placesLGeoJson = L.geoJson(places).addTo(map);
+//        console.log(places);
+//        console.log(placesLGeoJson);
+//        var placesLGeoJson = L.geoJson(places, {
+//            pointToLayer : function(feature, latlng) {
+//                return L.circle(latlng, feature.properties.size);
+//            }
+//        }).addTo(map);
+
+        
+//        var myFeatures = {
+//          "type": "FeatureCollection",
+//          "features": [
+//            {
+//              "type": "Feature",
+//              "properties": {
+//                "name": "Some Place",
+//                "level ": 75
+//              },
+//              "geometry": {
+//                "type": "LineString",
+//                "coordinates": [
+//                  [
+//                    27.5537109375,
+//                    53.90433815627468
+//                  ],
+//                  [
+//                    30.278320312499996,
+//                    55.25407706707272
+//                  ],
+//                  [
+//                    32.08007812499999,
+//                    54.80068486732233
+//                  ],
+//                  [
+//                    34.453125,
+//                    53.225768435790194
+//                  ],
+//                  [
+//                    39.7265625,
+//                    54.648412502316695
+//                  ]
+//                ]
+//              }
+//            },
+//            {
+//              "type": "Feature",
+//              "properties": {
+//                "name": "Another Place",
+//                "size": 65000
+//              },
+//              "geometry": {
+//                "type": "Point",
+//                "coordinates": [
+//                  38.67187499999999,
+//                  52.16045455774706
+//                ]
+//              }
+//            },
+//            {
+//              "type": "Feature",
+//              "properties": {
+//                "name": "Yet Another Place",
+//                "size": 22000
+//              },
+//              "geometry": {
+//                "type": "Point",
+//                "coordinates": [
+//                  29.3994140625,
+//                  52.802761415419674
+//                ]
+//              }
+//            },
+//            {
+//              "type": "Feature",
+//              "properties": {
+//                "name": "Some Place",
+//                "size": 38000
+//              },
+//              "geometry": {
+//                "type": "Point",
+//                "coordinates": [
+//                  33.7939453125,
+//                  56.53525774684848
+//                ]
+//              }
+//            },
+//            {
+//              "type": "Feature",
+//              "properties": {},
+//              "geometry": {
+//                "type": "Polygon",
+//                "coordinates": [
+//                  [
+//                    [
+//                      22.2802734375,
+//                      49.809631563563094
+//                    ],
+//                    [
+//                      22.2802734375,
+//                      51.481382896100975
+//                    ],
+//                    [
+//                      33.0029296875,
+//                      51.481382896100975
+//                    ],
+//                    [
+//                      33.0029296875,
+//                      49.809631563563094
+//                    ],
+//                    [
+//                      22.2802734375,
+//                      49.809631563563094
+//                    ]
+//                  ]
+//                ]
+//              }
+//            },
+//            {
+//              "type": "Feature",
+//              "properties": {},
+//              "geometry": {
+//                "type": "Polygon",
+//                "coordinates": [
+//                  [
+//                    [
+//                      35.8154296875,
+//                      57.468589192089325
+//                    ],
+//                    [
+//                      40.517578125,
+//                      57.397624055000456
+//                    ],
+//                    [
+//                      36.25488281249999,
+//                      55.4040698270061
+//                    ],
+//                    [
+//                      35.33203125,
+//                      56.24334992410525
+//                    ],
+//                    [
+//                      35.8154296875,
+//                      57.468589192089325
+//                    ]
+//                  ]
+//                ]
+//              }
+//            }
+//          ]
+//        };
+//    var pointOptions = {
+//        color: "purple"
+//    }
+//    var lineOptions = {
+//        color: "yellow"  
+//    }
+//    var polygonOptions = {
+//        color: "red"   
+//    }
+//    var europeFeatures = L.geoJson(myFeatures, {
+//        pointToLayer : function(feature, latlng) {
+//            return L.circle(latlng, feature.properties.size);
+//        },
+//        onEachFeature: function(feature, layer) {
+//            if(feature.geometry.type == "Point") {
+//                layer.setStyle(pointOptions);
+//            }
+//            if(feature.geometry.type == "LineString") {
+//                layer.setStyle(lineOptions);
+//            }   
+//            if(feature.geometry.type == "Polygon") {
+//                layer.setStyle(polygonOptions);
+//            }
+//        }
+//    }).addTo(map);
+//    
+//    var europeFeatures = L.geoJson(myFeatures, {
+//        pointToLayer : function(feature, latlng) {
+//            return L.circle(latlng, feature.properties.size);
+//        },
+//        style : function(feature) {
+//            return { dashArray: "5, 10",
+//                     weight: 2
+//                   }   
+//        },
+//        onEachFeature: function(feature, layer) {
+//            if(feature.geometry.type == "Point") {
+//                layer.setStyle(pointOptions);
+//                layer.bindPopup("I am a "+feature.geometry.type+ " Feature!")
+//            }
+//            if(feature.geometry.type == "LineString") {
+//                layer.setStyle(lineOptions);
+//                layer.bindPopup("I am a "+feature.geometry.type+ " Feature!")
+//            }   
+//            if(feature.geometry.type == "Polygon") {
+//                layer.setStyle(polygonOptions);
+//                layer.bindPopup("I am a "+feature.geometry.type+ " Feature!")
+//            }
+//        }
+//    }).addTo(map);
+//        
+//    var newPolygon = {
+//      "type": "FeatureCollection",
+//      "features": [
+//        {
+//          "type": "Feature",
+//          "properties": {},
+//          "geometry": {
+//            "type": "Polygon",
+//            "coordinates": [
+//              [
+//                [
+//                  28.125,
+//                  58.859223547066584
+//                ],
+//                [
+//                  23.1591796875,
+//                  58.44773280389084
+//                ],
+//                [
+//                  21.3134765625,
+//                  56.17002298293205
+//                ],
+//                [
+//                  25.6201171875,
+//                  56.12106042504407
+//                ],
+//                [
+//                  28.212890625,
+//                  57.37393841871411
+//                ],
+//                [
+//                  28.125,
+//                  58.859223547066584
+//                ]
+//              ]
+//            ]
+//          }
+//        }
+//      ]
+//    }
+//    europeFeatures.addData(newPolygon);
+//               
+      
+    </script>
+    
+</body>
+
+</html>
