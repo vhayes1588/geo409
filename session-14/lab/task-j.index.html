@@ -199,7 +199,8 @@
         layer.on('mouseover', function (e) {
             e.target.setStyle({
                 color:'green',
-                fillColor: 'none'
+                fillColor: getColor(props[attribute]/
+                                        props[norm], breaks)
             })
             updateInfo(this);
         });
