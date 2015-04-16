@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Map 1 Solution</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            width: 80%;
+            height: 540px;
+            margin: 10px auto;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        /* Additional style rules go here! */
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Beware.....</h1>
+        <h2>of the Attack Iguanas</h2>
+    </header>
+
+    <div id='map'></div>
+
+    <footer>
+        <p>Map authored by: Vincent Hayes</p>
+        <p>As you may know, the "Iguanas" have envaded this land and are on the loose. Their much-feared tongue is capable of reaching up to 2200 meters to snatch an innocent civilian. I have been hired by the wonderful Lord Mayor of Melbourne, Mr. Robert Doyle to create a map that ensures the safety of the citizens of the great Melbourne, Austrialia. This map is detailed to help you avoid catastrophe and highlight the safety zones.</p>
+    </footer>
+
+    <script>
+        var map = L.map('map', {
+            center: [-37.832565, 144.982796],
+            zoom: 11
+        });
+        var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+            attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+            subdomains: '0123',
+            minZoom: 2,
+            maxZoom: 18
+        });
+        map.addLayer(tiles);
+        
+      
+        var iguanaZones = [
+            {
+                name: 'lz1',
+                coordinates: [-37.854506, 144.797431],
+                properties: {
+                    size: 1850
+                }
+            },
+            {
+                name: 'lz2',
+                coordinates: [-37.749253, 144.855108],
+                properties: {
+                    size: 2500
+                }
+            },
+            {
+                name: 'lz3',
+                coordinates: [-37.770967, 144.943686],
+                properties: {
+                    size: 2150
+                }
+            },
+            {
+                name: 'lz4',
+                coordinates: [-37.720472, 145.002051],
+                properties: {
+                    size: 2000
+                }
+            },
+            {
+                name: 'lz5',
+                coordinates: [-37.774767, 145.033635],
+                properties: {
+                    size: 2500
+                }
+            },
+            {
+                name: 'lz6',
+                coordinates: [-37.827394, 145.040503],
+                properties: {
+                    size: 2350
+                }
+            },
+            {
+                name: 'lz7',
+                coordinates: [-37.767711, 145.116720],
+                properties: {
+                    size: 1100
+                }
+            },
+            {
+                name: 'lz8',
+                coordinates: [-37.829563, 145.129767],
+                properties: {
+                    size: 1450
+                }
+            },
+            {
+                name: 'lz9',
+                coordinates: [-37.779108, 145.749365],
+                properties: {
+                    size: 950
+                }
+            },
+            {
+                name: 'lz10',
+                coordinates: [-37.868059, 145.0714022],
+                properties: {
+                    size: 2000
+                }
+            },
+            {
+                name: 'lz11',
+                coordinates: [-37.932565, 145.080328],
+                properties: {
+                    size: 1700
+                }
+            },
+            {
+                name: 'lz12',
+                coordinates: [-37.873479, 145.1963717],
+                properties: {
+                    size: 1200
+                }
+            }
+        ]; 
+        
+        
+        var iguanaOptions = {
+            color: "blue",
+            fillColor: "blue"       
+        };
+       
+        var iguanaThreatOptions = { 
+            color: 'orange', 
+            fillColor: 'orange'
+        };
+        
+        
+        var iguanaGroup = L.layerGroup();
+        
+       
+        for(var i=0; i<iguanaZones.length; i++) {
+            
+            var iguanaColony = L.circle(iguanaZones[i].coordinates,
+                                iguanaZones[i].properties.size,
+                                iguanaOptions)
+                                .addTo(iguanaGroup); 
+        }
+        
+        iguanaGroup.addTo(map);
+        
+        var marker;
+
+        map.on('click', function(e) { 
+            
+            if(map.hasLayer(marker)) { 
+               
+                map.removeLayer(marker);
+            }
+            
+            var clickCoords = e.latlng; 
+
+            marker = L.marker(clickCoords).addTo(map);
+
+            testDistance(clickCoords);
+        
+        });
+        
+        function testDistance(testCoords) { 
+
+            iguanaGroup.eachLayer(function(layer) {
+
+                var distance = testCoords.distanceTo(layer.getLatLng());
+
+                distance = distance - layer.getRadius();
+
+                if(distance < 2200) {
+                 
+                    layer.setStyle(iguanaThreatOptions);
+                } else {
+             
+                    layer.setStyle(iguanaOptions); 
+                }
+            });
+        }
+        
+        
+    </script>
+    
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Power Plants Near Lexington</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            width: 80%;
+            height: 540px;
+            margin: 10px auto;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        /* Additional style rules go here! */
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Power Plants Near Lexington</h1>
+    </header>
+
+    <div id='map'></div>
+
+    <footer>
+        <p>Map authored by: Vincent Hayes</p>
+        <p>This map shows the power plants around Lexington and what fuel source they hold.</p>
+    </footer>
+    <script src="power-plants-assignment.js"></script>
+    <script>
+        var map = L.map('map', {
+            center: [37.63, -84.63],
+            zoom: 6,
+        });
+       
+        var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', 
+                                         {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+            subdomains: 'abcd',
+            minZoom: 0,
+            maxZoom: 18
+        });
+        map.addLayer(tiles);
+        
+        // Begin writing/modifying code for Map 2 here
+        
+        var lexCoords = L.latLng(38.03, -84.5);
+        
+        plants.features.sort(function(a,b) {
+			return b.properties.capacity_mw - a.properties.capacity;
+		});
+               
+        L.geoJson(plants, {
+            pointToLayer: function(feature,latlng) {
+                 return L.circleMarker(latlng, {
+                     color: 'orange',
+                     weight: 1,
+                     fillColor: 'yellow',
+                     fillOpacity: .8,
+                     radius: getRadius(feature.properties.source["Coal"])
+                 });   
+            },
+            filter: function(feature, layer) {
+                var featureCoords = L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]);
+                
+                if(lexCoords.distanceTo(featureCoords)/1000 < 400 &&
+                    feature.properties.source["Coal"] && 
+                    feature.properties.capacity < 500) {
+                    return feature;
+                }
+            },
+            onEachFeature: function(feature,layer) {
+                var distance = lexCoords.distanceTo(L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]))/1000;
+                var props = feature.properties;
+                var content = "<b>"+props.plant_name+"</b><br>"+
+                    props.capacity.toLocaleString()+" MW<br>";
+                var source = props.source;
+                for(var fuel in source){
+                    content+="<b>"+fuel+"</b>: "+source[fuel].toLocaleString()+" MW<br>";
+                }
+                content+= "This plant is <b>"+distance.toLocaleString()+" km</b> from Lexington."
+                layer.bindPopup(content); 
+                
+                layer.on('mouseover', function() {
+                    layer.setStyle({
+                        fillColor: 'red'
+                    });
+                });
+                layer.on('mouseout', function() {
+                    layer.setStyle({
+                        fillColor: 'yellow'
+                    });
+                });
+            }
+        }).addTo(map);
+           
+        function getRadius(val) {
+            var radius = Math.sqrt(val/Math.PI);
+            return radius * .8;   
+        }        
+        
+    </script>
+    
+</body>
+
+</html>
