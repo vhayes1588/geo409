@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Map 1 starter</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            width: 80%;
+            height: 540px;
+            margin: 10px auto;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        /* Additional style rules go here! */
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Beware!...</h1>
+        <h2>of the Attack Iguanas</h2>
+    </header>
+
+    <div id='map'></div>
+
+    <footer>       
+        <p>Map authored by: Vincent Hayes</p>
+        <p>As you may know, the "Iguanas" have envaded this land and are on the loose. Their much-feared tongue is capable of reaching up to 2200 meters to snatch an innocent civilian. I have been hired by the wonderful Lord Mayor of Melbourne, Mr. Robert Doyle to create a map that ensures the safety of the citizens of the great Melbourne, Austrialia. This map is detailed to help you avoid catastrophe and highlight the safety zones.
+        </p>
+    </footer>
+
+    <script>
+
+ // Step 1 and 2 here
+        var options = {
+            center: [-37.8136, 144.9631],
+            zoom: 8,
+            minZoom: 4,
+            maxZoom:12
+        }
+        
+        var map = L.map('map'), options);
+        
+            var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+                attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+                subdomains: '0123',
+                minZoom: 4,
+                maxZoom: 12
+            });
+        map.addLayer(tiles);
+        
+        var iguanaZones = [
+            {
+                name: 'lz1',
+                coordinates: [-37.8545, 144.7974],
+                properties: {
+                    size: 1850
+                }
+            },
+            {
+                name: 'lz2',
+                coordinates: [-37.7492, 144.8551],
+                properties: {
+                    size: 2500
+                }
+            },
+            {
+                name: 'lz3',
+                coordinates: [-37.7709, 144.9436],
+                properties: {
+                    size: 2150
+                }
+            },
+            {
+                name: 'lz4',
+                coordinates: [-37.7204, 145.0025],
+                properties: {
+                    size: 2000
+                }
+            },
+            {
+                name: 'lz5',
+                coordinates: [-37.7747, 145.0336],
+                properties: {
+                    size: 2500
+                }
+            },
+            {
+                name: 'lz6',
+                coordinates: [-37.8273, 145.0405],
+                properties: {
+                    size: 2350
+                }
+            },
+            {
+                name: 'lz7',
+                coordinates: [-37.7677, 145.1167],
+                properties: {
+                    size: 1100
+                }
+            },
+            {
+                name: 'lz8',
+                coordinates: [-37.8295, 145.1297],
+                properties: {
+                    size: 1450
+                }
+            },
+            {
+                name: 'lz9',
+                coordinates: [-37.7791, 145.7493],
+                properties: {
+                    size: 950
+                }
+            },
+            {
+                name: 'lz10',
+                coordinates: [-37.8680, 145.0714],
+                properties: {
+                    size: 2000
+                }
+            },
+            {
+                name: 'lz11',
+                coordinates: [-37.9325, 145.0803],
+                properties: {
+                    size: 1700
+                }
+            },
+            {
+                name: 'lz12',
+                coordinates: [-37.8734, 145.1963],
+                properties: {
+                    size: 1200
+                }
+            }
+        ]; // end iguanaShips data
+        
+        
+//      steps 3 here
+      var optionOne.setStyle({
+      color: "#1ed7b3",
+        weight: 15,
+            fillColor: "#1ed7b3",
+            fillOpacity: 1
+      });
+      var optionTwo.setStyle({
+      color: "#d01ed7",
+        weight: 15,
+            fillColor: "#d01ed7",
+            fillOpacity: 1
+      });
+            
+//      steps 4-6  here
+        
+        var iguanaLayerGroup=L.layerGroup();
+        for(var i=0; i<iguanaZones.length; i++) {
+            var lzName = iguanaZones[i].name;
+            var lzCoords = iguanaZones[i].coordinates;
+            var lzSize = iguanaZones[i].properties.size;
+            var lzIguana = L.circle(lzCoords, lzSize);
+            lzIguana.addTo(iguanaLayerGroup);
+        }
+        iguanaLayerGroup.addTo(map);
+            
+        var marker;  // keep this code
+       
+        map.on('click', function(e) {  // keep this code
+
+//              step seven here  
+            
+        var currentCoords = e.latlng;
+            
+            console.log("You clicked", currentCoords);
+            L.marker(currentCoords).addTo(map);
+            
+//              step eight here
+            
+        });  // keep this code
+        
+        function testDistance(currentCoords) {
+            
+            iguanaGroup.eachLayer(function(layer) {
+                console.log(layer);
+//              step 9 here
+                if (radius<2200)
+                {optionOne}
+                else {optionTwo}
+                
+//              step 10 here
+            });
+        }
+        
+// end map1 code
+        
+    </script>
+    
+</body>
+
+</html>
