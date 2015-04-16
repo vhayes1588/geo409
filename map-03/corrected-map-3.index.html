@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Fuel Sources Throughout the U.S.</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            width: 80%;
+            height: 540px;
+            margin: 10px auto;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        /* Additional style rules go here! */
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Fuel Sources:</h1>
+        <h2>Throughout the U.S.</h2>
+    </header>
+
+    <div id='map'></div>
+
+    <footer>
+        <p>Map authored by: Vincent Hayes</p>
+        <p>This map shows the areas throughout the United States where three of the common fuel types are used.</p>
+    </footer>
+    <script src="power-plants.js"></script>
+    <script>
+        var map = L.map('map', {
+            center: [36, -94],
+            zoom: 4,
+            doubleClickZoom: false
+        });
+        var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+            subdomains: 'abcd',
+            minZoom: 0,
+            maxZoom: 18
+        });
+        map.addLayer(tiles);
+        
+        plants.features.sort(function (a, b) {
+            return b.properties.capacity_mw - a.properties.capacity_mw;
+        });
+        var commonStyles = {
+            weight: 1,
+            stroke: 1,
+            fillOpacity: .8
+        }
+        var radiusCircle = L.circle([0, 0], 500000, {
+            fillColor: 'white',
+            fillOpacity: .1,
+            color: 'yellow',
+            opacity: .3,
+            stroke: false,
+            weight: 3,
+        }).addTo(map);
+        var layerInfo = {
+            hydroLayer: {
+                source: "Hydro",
+                color: '#1f78b4'
+            },
+            windLayer: {
+                source: "Wind",
+                color: '#a6cee3'
+            },
+            solarLayer: {
+                source: "Solar",
+                color: '#ffff99'
+            },
+        }
+        var geoJsonLayers = {};
+        for (var layer in layerInfo) {
+            geoJsonLayers[layer] = L.geoJson(plants, {
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, commonStyles);
+                },
+                filter: function (feature) {
+                    if (feature.properties.fuel_source[layerInfo[layer].source]) {
+                        return feature;
+                    }
+                },
+                style: function (feature) {
+                    return {
+                        color: layerInfo[layer].color,
+                        fillColor: layerInfo[layer].color,
+                        radius: getRadius(feature.properties.fuel_source[layerInfo[layer].source])
+                    }
+                }
+            }).addTo(map);
+        }
+        function getRadius(val) {
+            var radius = Math.sqrt(val / Math.PI);
+            return radius * .8;
+        }
+        map.on('click', function (e) {
+            radiusCircle.setLatLng(e.latlng);
+            radiusCircle.setRadius(500000);
+            var stats = {};
+            for (var l in geoJsonLayers) {
+                geoJsonLayers[l].eachLayer(function (layer) {
+                    var distance = e.latlng.distanceTo(layer.getLatLng()) / 1000;
+                    if (distance > 500) {
+                        layer.setStyle({
+                            stroke: false,
+                            fill: false
+                        });
+                    } else {
+                        layer.setStyle({
+                            stroke: true,
+                            fill: true
+                        });
+                        var props = layer.feature.properties;
+                        var popup = "<b>Name:</b> " + props.plant_name + "<br>";
+                        popup += "<b>Source:</b> " + layerInfo[l].source + "<br>";
+                        popup += "<b>Capacity:</b> " + props.fuel_source[layerInfo[l].source] + "MW" + "<br>";
+                        popup += "<b>Distance from click:</b> " + distance.toLocaleString() + "km";
+                        layer.bindPopup(popup);
+                        for (var source in props.fuel_source) {
+                            if (stats[source]) {
+                                stats[source] += props.fuel_source[source];
+                            } else {
+                                stats[source] = props.fuel_source[source];
+                            }
+                       }
+                    }
+                });
+            }
+            var statsContent = '';
+            for (var stat in stats) {
+                statsContent += "<b>" + stat + ":</b> " + stats[stat].toLocaleString() + " MW<br>"
+            }
+            radiusCircle.bindPopup(statsContent).openPopup();
+        });
+        map.on('dblclick ', function (e) {
+            radiusCircle.setLatLng(e.latlng);
+            radiusCircle.setRadius(200000);
+            for (var l in geoJsonLayers) {
+                geoJsonLayers[l].eachLayer(function (layer) {
+                    var distance = e.latlng.distanceTo(layer.getLatLng()) / 1000;
+                    if (distance > 200) {
+                        layer.setStyle({
+                            stroke: false,
+                            fill: false
+                        });
+                    } else {
+                        layer.setStyle({
+                            stroke: true,
+                            fill: true
+                        });
+                        var props = layer.feature.properties;
+                        var popup = "<b>Name:</b> " + props.plant_name + "<br>";
+                        popup += "<b>Source:</b> " + layerInfo[l].source + "<br>";
+                        popup += "<b>Capacity:</b> " + props.fuel_source[layerInfo[l].source] + "MW" + "<br>";
+                        popup += "<b>Distance from click:</b> " + distance.toLocaleString() + "km";
+                        layer.bindPopup(popup);
+                    }
+                });
+            }
+        });
+        var sourcesLabels = {
+            "<b style='color:#1f78b4'>Hydro</b>": geoJsonLayers.hydroLayer,
+            "<b style='color:#a6cee3'>Wind</b>": geoJsonLayers.windLayer,
+            "<b style='color:#ffff99; text-shadow: 0px 0px 1px #333;'>Solar</b>": geoJsonLayers.solarLayer
+        }
+        L.control.layers(null, sourcesLabels, {
+            collapsed: false
+        }).addTo(map);
+    </script>
+
+</body>
+
+</html>
