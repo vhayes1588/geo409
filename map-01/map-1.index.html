@@ -67,12 +67,12 @@
  // Step 1 and 2 here
         var options = {
             center: [-37.8136, 144.9631],
-            zoom: 8,
+            zoom: 10,
             minZoom: 4,
             maxZoom:12
         }
         
-        var map = L.map('map'), options);
+        var map = L.map('map', options);
         
             var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
                 attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
@@ -171,18 +171,18 @@
         
         
 //      steps 3 here
-      var optionOne.setStyle({
+      var optionOne = {
       color: "#1ed7b3",
         weight: 15,
             fillColor: "#1ed7b3",
             fillOpacity: 1
-      });
-      var optionTwo.setStyle({
+      };
+      var optionTwo = {
       color: "#d01ed7",
         weight: 15,
             fillColor: "#d01ed7",
             fillOpacity: 1
-      });
+      };
             
 //      steps 4-6  here
         
@@ -199,13 +199,21 @@
         var marker;  // keep this code
        
         map.on('click', function(e) {  // keep this code
-
+            
+            // if the marker exists and is defined
+            if(map.hasLayer(marker)) { 
+               // remove it from the map
+                map.removeLayer(marker);
+            }
+            
 //              step seven here  
             
-        var currentCoords = e.latlng;
+            var currentCoords = e.latlng;
             
             console.log("You clicked", currentCoords);
-            L.marker(currentCoords).addTo(map);
+            marker = L.marker(currentCoords).addTo(map);
+            
+            testDistance(currentCoords)
             
 //              step eight here
             
@@ -213,14 +221,22 @@
         
         function testDistance(currentCoords) {
             
-            iguanaGroup.eachLayer(function(layer) {
-                console.log(layer);
-//              step 9 here
-                if (radius<2200)
-                {optionOne}
-                else {optionTwo}
+            iguanaLayerGroup.eachLayer(function(layer) {
+                 // determine distance between marker and layer
+                var distance = currentCoords.distanceTo(layer.getLatLng());
                 
-//              step 10 here
+                // subtract radius from distance
+                distance = distance - layer.getRadius();
+               
+                // if that distance is too close
+                if(distance < 2200) {
+                    // change the layer option to indicate a threat
+                    layer.setStyle(optionOne);
+                } else {
+                    // otherwise, ensure layer options are still default
+                    layer.setStyle(optionTwo); 
+                }
+                
             });
         }
         
