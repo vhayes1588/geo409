@@ -44,97 +44,93 @@
             font-size: 1em;
             color: #001323;
         }
-        
     </style>
 </head>
 
 <body>
     <header>
-         <h1>Power Plants near Lexington</h1>  
+        <h1>Power Plants near Lexington</h1> 
     </header>
-       
+
     <div id='map'></div>
 
     <footer>
-                <p>Map authored by Vincent Hayes</p>
+        <p>Map authored by Vincent Hayes</p>
         <p>This map shows the power plants around Lexington and what fuel source they hold.</p>
 
     </footer>
-        
+    <script src="power-plants-assignment.js"></script>
     <script>
-
         var map = L.map('map', {
-            center: [36,-94],
-            zoom: 4,
+            center: [37.63, -84.63],
+            zoom: 6,
         });
-       
-        var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', 
-                                         {
+
+        var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
             subdomains: 'abcd',
             minZoom: 0,
             maxZoom: 18
         });
         map.addLayer(tiles);
-        
+
+         // this variable doesn't exist if you don't load it from the separate power-plants-assignment.js file.
         console.log(plants);
-        
-        plants.features.sort(function(a, b) {
+
+        plants.features.sort(function (a, b) {
             return b.properties.capacity_mw - a.properties.capacity_mw;
         });
         
+        var lexCoords = L.latLng(38.03, -84.5);
+        
         L.geoJson(plants, {
             pointToLayer: function (feature, latlng) {
-                return L.circleMarker (latlng, {
+                return L.circleMarker(latlng, {
                     color: 'white',
                     weight: 3,
                     fillColor: 'blue',
                     fillOpacity: 0.5,
-                    radius: getRadius (feature.properties.capacity)
+                    radius: getRadius(feature.properties.capacity)
                 });
             },
-            filter: function (feauture, layer) {
-                if((feature.properties.capcity <= 500)&&(feature.properties.source["Natural Gas"])){
-                    return feature;
-                }
-            },
             filter: function (feature, layer) {
-                if((feature.properties.distance <=
-                    400)&&(features.properties.source["This close to Lexington"])){
+                var featureCoords = L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]);
+                if (lexCoords.distanceTo(featureCoords)/1000 < 400 && feature.properties.source["Natural Gas"] <= 500 && feature.properties.source["Natural Gas"]) {
                     return feature;
                 }
             },
-            onEachFeature: function(feature,layer) {
-            var props = feature.properties;
-            var content = "<b>"+props.plant_name+"</b><br>"+
-            props.capacity_mw.toLocaleString()+" MW<br>";
-                var source = props.plant_name;
-                for(var fuel in source){
-                    content+="<b>"+fuel+"</b>: "+source[fuel].toLocaleString()+" MW<br>";
+            onEachFeature: function (feature, layer) {
+                var props = feature.properties;
+                var distance = lexCoords.distanceTo(L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]))/1000;
+                var content = "<b>" + props.plant_name + "</b><br>" +
+                    props.capacity.toLocaleString() + " MW<br>";
+                var source = props.source;
+                for (var fuel in source) {
+                    content += "<b>" + fuel + "</b>: " + source[fuel].toLocaleString() + " MW<br>";
                 }
-                  layer.bindPopup(conent);
-        
-layer.on('mouseover', function() {
-    layer.setStyle({
-        fillColor: 'blue'
-    });
-});
-        layer.on('mouseout', function() {
-            layer.setStyle({
-                fillColor: 'white'
-            });
-        });
+                content+= "This plant is <b>"+distance.toLocaleString()+" km</b> from Lexington."
+                layer.bindPopup(content);
+
+                layer.on('mouseover', function () {
+                    layer.setStyle({
+                        fillColor: 'blue'
+                    });
+                });
+                layer.on('mouseout', function () {
+                    layer.setStyle({
+                        fillColor: 'white'
+                    });
+                });
             }
-                
-                }).addTo(map);
-    
-            function getRadius(val) {
-            var radius = Math.sqrt(val/Math.PI);
+
+        }).addTo(map);
+
+        function getRadius(val) {
+            var radius = Math.sqrt(val / Math.PI);
             return radius * .8;
-            }
-                  
-</script>
-    
+        }
+    </script>
+
 </body>
 
 </html>
